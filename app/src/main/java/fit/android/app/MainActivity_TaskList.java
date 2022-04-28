@@ -14,7 +14,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
         // Render --> UI Listview (reload listview)
         FragmentItemTaskList fragmentItemTaskList = new FragmentItemTaskList();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.idFrameLayoutTaskList, fragmentItemTaskList, "Fragment item task-list")
+                .add(R.id.idFrameLayoutTaskList, fragmentItemTaskList, "Fragment item task-list.")
                 .commit();
     }
 }
