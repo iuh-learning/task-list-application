@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/custom_button_add_task"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:backgroundTint="#C284FF"
     android:layout_margin="16dp">
 
     <TextView
@@ -14,7 +16,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="ID. "
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,10 +29,41 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="NAME TASK"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/txtID"
         app:layout_constraintStart_toEndOf="@+id/txtID"
         app:layout_constraintTop_toTopOf="@+id/txtID" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_button_add_task"
+        android:backgroundTint="#FF0404"
+        android:text="X"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/txtNameTask"
+        app:layout_constraintEnd_toStartOf="@+id/btnBack"
+        app:layout_constraintTop_toTopOf="@+id/txtNameTask" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_button_add_task"
+        android:backgroundTint="#35FF31"
+        android:text="-->"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDelete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnDelete"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

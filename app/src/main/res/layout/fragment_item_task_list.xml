@@ -9,6 +9,9 @@
     <ListView
         android:id="@+id/idListViewTaskList"
         android:layout_width="0dp"
+        android:dividerHeight="10.0sp"
+        android:divider="@android:color/transparent"
+        android:background="@drawable/custom_button_add_task"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
