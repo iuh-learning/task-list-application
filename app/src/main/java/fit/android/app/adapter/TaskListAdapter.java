@@ -1,15 +1,19 @@
 package fit.android.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 import fit.android.app.R;
+import fit.android.app.activity.MainActivity_DetailList;
+import fit.android.app.activity.MainActivity_Register;
 import fit.android.app.model.ItemTaskList;
 
 public class TaskListAdapter extends BaseAdapter {
@@ -54,6 +58,8 @@ public class TaskListAdapter extends BaseAdapter {
         // find id
         TextView txtID = view.findViewById(R.id.txtID);
         TextView txtNameTask = view.findViewById(R.id.txtNameTask);
+        Button btnNext = view.findViewById(R.id.btnNext);
+        Button btnDel = view.findViewById(R.id.btnDelete);
 
         final ItemTaskList itemTaskList = listItems.get(i);
 
@@ -63,6 +69,13 @@ public class TaskListAdapter extends BaseAdapter {
             txtNameTask.setText(itemTaskList.getNameTask());
         }
 
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MainActivity_DetailList.class);
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
 }
