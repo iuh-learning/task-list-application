@@ -3,23 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/drawable/custom_border_input_task.xml" value="0.2595" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/drawable/custom_button_add_task.xml" value="0.2595" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/drawable/custom_radius_botton.xml" value="0.2595" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/activity_main_task_list.xml" value="0.22135416666666666" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/activity_main_your_detail.xml" value="0.25416666666666665" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/custom_item_detail_listview.xml" value="0.25416666666666665" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/custom_item_list_view.xml" value="0.22135416666666666" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/fragment_detail_task_list.xml" value="0.25416666666666665" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/fragment_item_task_list.xml" value="0.22135416666666666" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/item_your_detail.xml" value="0.25416666666666665" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/your_detail.xml" value="0.25416666666666665" />
-        <entry key="..\:/HocTap/ky2nam3/LTTBDD/DoAnTBDD/task-list-management-application/app/src/main/res/layout/your_task.xml" value="0.25416666666666665" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/drawable/custom_input_login.xml" value="0.2555" />
         <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/drawable/custom_radius_botton.xml" value="0.2" />
         <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/font/custom_font.xml" value="0.14635416666666667" />
         <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/font/customfont.xml" value="0.28958333333333336" />
         <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/activity_main_login.xml" value="0.259375" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/activity_main_sign_up.xml" value="0.2" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/activity_main_task_list.xml" value="0.264" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/activity_main_your_detail.xml" value="0.259375" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/custom_item_detail_listview.xml" value="0.259375" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/custom_item_list_view.xml" value="0.4" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/fragment_detail_task_list.xml" value="0.259375" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/fragment_item_task_list.xml" value="0.1" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/item_your_detail.xml" value="0.1" />
+        <entry key="..\:/IUH.STUDY/K2N3_2022/android/ANDROID_DHKTPM15A_NHOM10/app/src/main/res/layout/your_detail.xml" value="0.264" />
       </map>
     </option>
   </component>
