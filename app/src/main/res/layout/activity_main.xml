@@ -48,13 +48,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnStart"
         android:layout_width="0dp"
         android:layout_height="78dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="28dp"
-        android:text="Login"
+        android:text="Get Started"
+        android:textAllCaps="false"
         android:fontFamily="@font/solway_bold"
         android:textColor="@color/white"
         android:textSize="20dp"
