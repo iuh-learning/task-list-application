@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity_TaskList">
+    tools:context=".activity.MainActivity_TaskList">
 
     <View
         android:id="@+id/viewLine2"
-        android:layout_width="373dp"
+        android:layout_width="0dp"
         android:layout_height="2dp"
         android:layout_marginTop="24dp"
         android:background="@color/black"
@@ -44,7 +44,7 @@
 
     <View
         android:id="@+id/viewLine"
-        android:layout_width="373dp"
+        android:layout_width="0dp"
         android:layout_height="2dp"
         android:layout_marginTop="28dp"
         android:background="@color/black"

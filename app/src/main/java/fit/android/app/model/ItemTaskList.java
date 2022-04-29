@@ -1,4 +1,4 @@
-package fit.android.app;
+package fit.android.app.model;
 
 public class ItemTaskList {
 

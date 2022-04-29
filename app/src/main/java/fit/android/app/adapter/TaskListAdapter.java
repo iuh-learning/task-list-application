@@ -1,4 +1,4 @@
-package fit.android.app;
+package fit.android.app.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+
+import fit.android.app.R;
+import fit.android.app.model.ItemTaskList;
 
 public class TaskListAdapter extends BaseAdapter {
 

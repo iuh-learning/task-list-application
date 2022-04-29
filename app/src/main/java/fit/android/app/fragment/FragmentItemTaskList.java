@@ -1,4 +1,4 @@
-package fit.android.app;
+package fit.android.app.fragment;
 
 import android.os.Bundle;
 
@@ -11,6 +11,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fit.android.app.R;
+import fit.android.app.adapter.TaskListAdapter;
+import fit.android.app.model.ItemTaskList;
 
 public class FragmentItemTaskList extends Fragment {
 
