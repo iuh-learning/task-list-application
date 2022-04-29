@@ -1,4 +1,4 @@
-package fit.android.app;
+package fit.android.app.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import fit.android.app.R;
 
 public class MainActivity extends AppCompatActivity {
 

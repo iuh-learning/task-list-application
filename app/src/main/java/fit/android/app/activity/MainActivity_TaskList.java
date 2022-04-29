@@ -1,8 +1,11 @@
-package fit.android.app;
+package fit.android.app.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import fit.android.app.fragment.FragmentItemTaskList;
+import fit.android.app.R;
 
 public class MainActivity_TaskList extends AppCompatActivity {
 
