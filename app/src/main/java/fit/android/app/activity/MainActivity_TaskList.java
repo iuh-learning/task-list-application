@@ -22,8 +22,6 @@ public class MainActivity_TaskList extends AppCompatActivity {
     // init
     private Button btnAdd, btnUpdate;
     private EditText edtTask;
-    private ListView listViewTask;
-    //private int i
 
     private AppDatabase db;
     private ItemTaskListDAO dao;
@@ -46,7 +44,6 @@ public class MainActivity_TaskList extends AppCompatActivity {
         btnAdd = findViewById(R.id.btnAdd);
         edtTask = findViewById(R.id.edtTask);
         btnUpdate = findViewById(R.id.btnUpdate);
-        listViewTask = findViewById(R.id.idListViewTaskList);
 
         // Add task
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -73,14 +70,6 @@ public class MainActivity_TaskList extends AppCompatActivity {
                 //String
             }
         });
-
-        // Click on listview
-//        listViewTask.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(MainActivity_TaskList.this, "index: ", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
     }
 

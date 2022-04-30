@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +76,14 @@ public class FragmentItemTaskList extends Fragment {
         listItems = dao.getAll("baotran@gmail.com");
         adapter = new TaskListAdapter(getActivity(), R.layout.custom_item_list_view, listItems);
         listView.setAdapter(adapter);
+
+        // Click on listview
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         return view;
     }
