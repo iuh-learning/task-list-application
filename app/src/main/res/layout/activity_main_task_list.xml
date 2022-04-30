@@ -22,23 +22,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Hi, Tuan"
+        android:fontFamily="@font/solway_medium"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/btnLogOut"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnLogOut" />
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
 
-    <Button
-        android:id="@+id/btnLogOut"
+    <TextView
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_button_add_task"
-        android:backgroundTint="#C284FF"
+        android:fontFamily="@font/solway_medium"
         android:text="Logout"
-        android:textColor="@color/white"
+        android:textColor="@color/blue_text"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +49,7 @@
         android:layout_height="2dp"
         android:layout_marginTop="28dp"
         android:background="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/btnLogOut"
+        app:layout_constraintEnd_toEndOf="@+id/textView5"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/txtName"
         app:layout_constraintTop_toBottomOf="@+id/txtName" />
@@ -59,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="YOUR TASK"
+        android:fontFamily="@font/solway_medium"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -76,6 +78,7 @@
         android:background="@drawable/custom_border_input_task"
         android:ems="10"
         android:hint="Input task ..."
+        android:fontFamily="@font/solway_regular"
         android:inputType="textPersonName"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,6 +93,7 @@
         android:background="@drawable/custom_button_add_task"
         android:backgroundTint="#C284FF"
         android:text="Add"
+        android:fontFamily="@font/solway_medium"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/edtTask"
@@ -102,6 +106,7 @@
         android:background="@drawable/custom_button_add_task"
         android:backgroundTint="#C284FF"
         android:text="Update"
+        android:fontFamily="@font/solway_medium"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btnAdd"
@@ -114,6 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="TASK LIST"
+        android:fontFamily="@font/solway_medium"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -135,5 +141,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtTaskList">
 
     </FrameLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
