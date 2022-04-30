@@ -69,8 +69,9 @@ public class MainActivity_Register extends AppCompatActivity {
                                 "Thông báo", "Vui lòng nhập đẩy đủ thông tin!");
                 }else {
                     if(confirmPass.equals(password)) {
-                        User user = new User(fullName, email, password);
+                        User user = new User(email, fullName, password);
                         userDAO.insert(user);
+                        clearInput();
                         Message.showMessage(MainActivity_Register.this,"Thông báo", "Tạo tài khoản thành công!");
                     }else {
                         Message.showMessage(MainActivity_Register.this,"Thông báo", "Mật khẩu nhập lại phải giống mật khẩu đã nhập!");
@@ -78,6 +79,13 @@ public class MainActivity_Register extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void clearInput() {
+        txtFullNameRegister.setText("");
+        txtEmailRegister.setText("");
+        txtPasswordRegister.setText("");
+        txtConfirmPasswordRegister.setText("");
     }
 
 
