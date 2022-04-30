@@ -13,7 +13,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import fit.android.app.dao.ItemTaskListDAO;
+import fit.android.app.dao.UserDAO;
 import fit.android.app.database.AppDatabase;
 import fit.android.app.fragment.FragmentItemTaskList;
 import fit.android.app.R;
@@ -30,6 +38,9 @@ public class MainActivity_TaskList extends AppCompatActivity {
 
     private AppDatabase db;
     private ItemTaskListDAO dao;
+
+    // Firebase
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +90,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
                 }
 
                 dao.insert(new ItemTaskList(edtNameTask, emailFromLogin));
+                saveDataFromClientToFireBase(emailFromLogin);
                 reLoadListView();
                 clearInput();
                 //Message.showMessage(MainActivity_TaskList.this, "Message", "Inserted task name successfully.");
@@ -160,4 +172,23 @@ public class MainActivity_TaskList extends AppCompatActivity {
         edtTask.requestFocus();
     }
 
+    private void saveDataFromClientToFireBase(String email) {
+        UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
+        List<ItemTaskList> list = dao.getAll(email);
+        Map<String, ItemTaskList> mapUsers = new HashMap<>();
+        mDatabase = FirebaseDatabase.getInstance().getReference("/users");
+
+        String name = userDAO.findByEmail(email).getFullName();
+
+        for (ItemTaskList item : list) {
+            mapUsers.put(""+item.getId(), item);
+        }
+
+        try {
+            mDatabase.child(name).child("list-task").setValue(mapUsers);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
