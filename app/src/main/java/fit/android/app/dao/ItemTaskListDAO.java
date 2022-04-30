@@ -10,13 +10,12 @@ import androidx.room.Update;
 import java.util.List;
 
 import fit.android.app.model.ItemTaskList;
-import fit.android.app.model.User;
 
 @Dao
 public interface ItemTaskListDAO {
     //get all item task list
-    @Query("SELECT * FROM item_task_list")
-    List<ItemTaskList> getAll();
+    @Query("SELECT * FROM item_task_list WHERE email LIKE :email")
+    List<ItemTaskList> getAll(String email);
 
     //find user by name task
     @Query("SELECT * FROM item_task_list WHERE name_task LIKE :name")
