@@ -2,6 +2,7 @@ package fit.android.app.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "item_task_list")
@@ -18,6 +19,7 @@ public class ItemTaskList {
         this.nameTask = nameTask;
     }
 
+    @Ignore
     public ItemTaskList() {
     }
 
@@ -33,7 +35,7 @@ public class ItemTaskList {
         return nameTask;
     }
 
-    public void setNameNameTask(String nameTask) {
+    public void setNameTask(String nameTask) {
         this.nameTask = nameTask;
     }
 }

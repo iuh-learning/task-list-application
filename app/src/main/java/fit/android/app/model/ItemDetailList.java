@@ -2,6 +2,7 @@ package fit.android.app.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "item_detail_list")
@@ -15,6 +16,7 @@ public class ItemDetailList {
     @ColumnInfo(name = "task_id")
     private int taskID;
 
+    @Ignore
     public ItemDetailList() {
     }
 
@@ -39,5 +41,11 @@ public class ItemDetailList {
         this.nameDetail = nameDetail;
     }
 
+    public int getTaskID() {
+        return taskID;
+    }
 
+    public void setTaskID(int taskID) {
+        this.taskID = taskID;
+    }
 }
