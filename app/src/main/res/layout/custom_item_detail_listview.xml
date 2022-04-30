@@ -16,7 +16,7 @@
         android:layout_marginStart="8dp"
         android:text="1.Item 1"
         android:textColor="#FAF9F9"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="normal|bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/txtID"
         app:layout_constraintStart_toEndOf="@+id/txtID"
@@ -24,8 +24,8 @@
 
     <Button
         android:id="@+id/btnDelete"
-        android:layout_width="68dp"
-        android:layout_height="52dp"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:background="@drawable/custom_button_add_task"
         android:backgroundTint="#F60000"
@@ -46,7 +46,7 @@
         android:layout_marginBottom="13dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="normal|bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
