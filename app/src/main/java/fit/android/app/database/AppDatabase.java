@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
     //func get database checked by INSTANCE variable
     public static AppDatabase getDatabase(Context context) {
         if(INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "task_app_database").build();
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "task_app_database").allowMainThreadQueries().build();
         }
 
         return INSTANCE;
