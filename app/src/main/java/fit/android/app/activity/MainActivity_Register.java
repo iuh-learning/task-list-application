@@ -157,6 +157,4 @@ public class MainActivity_Register extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
 }

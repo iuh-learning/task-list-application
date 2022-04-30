@@ -81,7 +81,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
                 dao.insert(new ItemTaskList(edtNameTask, emailFromLogin));
                 reLoadListView();
                 clearInput();
-                Message.showMessage(MainActivity_TaskList.this, "Message", "Inserted task name successfully.");
+                //Message.showMessage(MainActivity_TaskList.this, "Message", "Inserted task name successfully.");
             }
         });
 
@@ -110,7 +110,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
                             dao.update(itemTaskList);
                             reLoadListView();
                             clearInput();
-                            Message.showMessage(MainActivity_TaskList.this, "Message", "Updated successfully.");
+                            //Message.showMessage(MainActivity_TaskList.this, "Message", "Updated successfully.");
                         }
                     }
                 });
