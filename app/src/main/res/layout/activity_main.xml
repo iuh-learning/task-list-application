@@ -35,8 +35,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="299dp"
-        android:layout_height="0dp"
+        android:layout_width="339dp"
+        android:layout_height="89dp"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/solway_medium"
         android:text="All your work will be\nmanaged intelligently and thanks\nto that your work will be\nprogressedin an orderly manner."
