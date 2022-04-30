@@ -117,13 +117,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/solway_bold"
         android:text="Already have an account?"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btnRegister" />
+        app:layout_constraintStart_toStartOf="@+id/btnRegister"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
     <TextView
         android:id="@+id/tvLogin"
