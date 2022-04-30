@@ -23,6 +23,13 @@ public class ItemTaskList {
         this.email = email;
     }
 
+    // Constructor (add task)
+    @Ignore
+    public ItemTaskList(String nameTask, String email) {
+        this.nameTask = nameTask;
+        this.email = email;
+    }
+
     @Ignore
     public ItemTaskList() {
     }

@@ -1,5 +1,6 @@
 package fit.android.app.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,13 +8,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fit.android.app.R;
 import fit.android.app.adapter.TaskListAdapter;
+import fit.android.app.dao.ItemTaskListDAO;
+import fit.android.app.database.AppDatabase;
 import fit.android.app.model.ItemTaskList;
 
 public class FragmentItemTaskList extends Fragment {
@@ -47,26 +52,42 @@ public class FragmentItemTaskList extends Fragment {
         }
     }
 
+    // init
     private TaskListAdapter adapter;
     private List<ItemTaskList> listItems;
     private ListView listView;
+
+    private AppDatabase db;
+    private ItemTaskListDAO dao;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_task_list, container, false);
 
+        // SQLite
+        db = AppDatabase.getDatabase(getActivity());
+
+        // DAO
+        dao = db.itemTaskListDAO();
+
         // find id
         listView = view.findViewById(R.id.idListViewTaskList);
 
-        listItems = new ArrayList<>();
-        listItems.add(new ItemTaskList(1, "Đá bóng", "tuan@gmail.com"));
-        listItems.add(new ItemTaskList(2, "Nghe nhạc", "tuan@gmail.com"));
-        listItems.add(new ItemTaskList(3, "Xem phim", "tuan@gmail.com"));
+        // email from MainActivity_Login
+        Intent intent = getActivity().getIntent();
+        String emailFromLogin = intent.getStringExtra("user_email");
 
-        adapter = new TaskListAdapter(getActivity(), R.layout.custom_item_list_view, listItems);
-        listView.setAdapter(adapter);
+        // load data to listview
+        loadDataToListView(emailFromLogin);
 
         return view;
+    }
+
+    // load listview
+    public void loadDataToListView(String email) {
+        listItems = dao.getAll(email);
+        adapter = new TaskListAdapter(getActivity(), R.layout.custom_item_list_view, listItems);
+        listView.setAdapter(adapter);
     }
 }
