@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "666175190992",
+    "project_id": "task-list-management-app",
+    "storage_bucket": "task-list-management-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666175190992:android:f423a93980c4f953f56bd5",
+        "android_client_info": {
+          "package_name": "fit.adroid.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666175190992-hr64hia7qh9o6pj4qj9osuvccdcs3t0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1vdikSPjaywUUoeH5R1RkNBx2rw9I37Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666175190992-hr64hia7qh9o6pj4qj9osuvccdcs3t0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
