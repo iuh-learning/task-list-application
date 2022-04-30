@@ -35,7 +35,7 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="339dp"
+        android:layout_width="0dp"
         android:layout_height="89dp"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/solway_medium"
