@@ -1,9 +1,24 @@
 package fit.android.app.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "item_detail_list")
 public class ItemDetailList {
+    @PrimaryKey(autoGenerate = true)
     private  int id;
-    private     String nameDetail;
+
+    @ColumnInfo(name = "name_detail")
+    private  String nameDetail;
+
+    @ColumnInfo(name = "task_id")
     private int taskID;
+
+    @Ignore
+    public ItemDetailList() {
+    }
 
     public ItemDetailList(int id, String nameDetail, int taskID) {
         this.id = id;
@@ -26,5 +41,11 @@ public class ItemDetailList {
         this.nameDetail = nameDetail;
     }
 
+    public int getTaskID() {
+        return taskID;
+    }
 
+    public void setTaskID(int taskID) {
+        this.taskID = taskID;
+    }
 }

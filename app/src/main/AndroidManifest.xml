@@ -17,9 +17,9 @@
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity_TaskList"
-            android:exported="true" />
+            android:exported="false" />
         <activity android:name=".activity.MainActivity_DetailList"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
