@@ -1,5 +1,6 @@
 package fit.android.app.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -73,23 +74,19 @@ public class FragmentItemTaskList extends Fragment {
         // find id
         listView = view.findViewById(R.id.idListViewTaskList);
 
-        // load data to listview
-        loadDataToListView();
+        // email from MainActivity_Login
+        Intent intent = getActivity().getIntent();
+        String emailFromLogin = intent.getStringExtra("user_email");
 
-        // Click on listview
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(getActivity(), "Listview", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        // load data to listview
+        loadDataToListView(emailFromLogin);
 
         return view;
     }
 
     // load listview
-    public void loadDataToListView() {
-        listItems = dao.getAll("baotran@gmail.com");
+    public void loadDataToListView(String email) {
+        listItems = dao.getAll(email);
         adapter = new TaskListAdapter(getActivity(), R.layout.custom_item_list_view, listItems);
         listView.setAdapter(adapter);
     }

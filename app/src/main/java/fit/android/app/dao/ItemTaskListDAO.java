@@ -17,6 +17,10 @@ public interface ItemTaskListDAO {
     @Query("SELECT * FROM item_task_list WHERE email LIKE :email")
     List<ItemTaskList> getAll(String email);
 
+    // get email
+    @Query("SELECT * FROM item_task_list WHERE email LIKE :email")
+    ItemTaskList getEmail(String email);
+
     //find user by name task
     @Query("SELECT * FROM item_task_list WHERE name_task LIKE :name")
     ItemTaskList findByNameTask(String name);

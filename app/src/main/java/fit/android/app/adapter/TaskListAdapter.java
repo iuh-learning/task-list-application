@@ -26,7 +26,6 @@ public class TaskListAdapter extends BaseAdapter {
     private Context context;
     private int idLayout;
     private List<ItemTaskList> listItems;
-    private int index = -1;
 
     // Constructor
     public TaskListAdapter(Context context, int idLayout, List<ItemTaskList> listItems) {
@@ -72,7 +71,7 @@ public class TaskListAdapter extends BaseAdapter {
 
         if(listItems != null && !listItems.isEmpty()) {
             // set tv
-            txtID.setText(String.valueOf(itemTaskList.getId()) + ". ");
+            txtID.setText(i+1 + ". ");
             txtNameTask.setText(itemTaskList.getNameTask());
         }
 
@@ -80,7 +79,12 @@ public class TaskListAdapter extends BaseAdapter {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Get name task to Task Details
                 Intent intent = new Intent(context, MainActivity_DetailList.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name_task", listItems.get(i).getNameTask());
+                intent.putExtras(bundle);
+
                 context.startActivity(intent);
             }
         });
@@ -91,14 +95,17 @@ public class TaskListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(context, MainActivity_TaskList.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("user_email", itemTaskList.getEmail());
                 bundle.putString("name_task", itemTaskList.getNameTask());
                 intent.putExtras(bundle);
+
                 context.startActivity(intent);
                 notifyDataSetChanged();
-                Toast.makeText(context, "Index: " + itemTaskList.getNameTask(), Toast.LENGTH_SHORT).show();
             }
         });
 
         return view;
     }
+
+
 }
