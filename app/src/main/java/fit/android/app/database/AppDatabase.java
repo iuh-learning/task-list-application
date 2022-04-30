@@ -1,6 +1,5 @@
 package fit.android.app.database;
 
-
 import android.content.Context;
 
 import androidx.room.Database;

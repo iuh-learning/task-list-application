@@ -13,10 +13,14 @@ public class ItemTaskList {
     @ColumnInfo(name = "name_task")
     private String nameTask;
 
+    @ColumnInfo(name = "email")
+    private String email;
+
     // Constructor
-    public ItemTaskList(int id, String nameTask) {
+    public ItemTaskList(int id, String nameTask, String email) {
         this.id = id;
         this.nameTask = nameTask;
+        this.email = email;
     }
 
     @Ignore
@@ -37,5 +41,13 @@ public class ItemTaskList {
 
     public void setNameTask(String nameTask) {
         this.nameTask = nameTask;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -60,9 +60,9 @@ public class FragmentItemTaskList extends Fragment {
         listView = view.findViewById(R.id.idListViewTaskList);
 
         listItems = new ArrayList<>();
-        listItems.add(new ItemTaskList(1, "Đá bóng"));
-        listItems.add(new ItemTaskList(2, "Nghe nhạc"));
-        listItems.add(new ItemTaskList(3, "Xem phim"));
+        listItems.add(new ItemTaskList(1, "Đá bóng", "tuan@gmail.com"));
+        listItems.add(new ItemTaskList(2, "Nghe nhạc", "tuan@gmail.com"));
+        listItems.add(new ItemTaskList(3, "Xem phim", "tuan@gmail.com"));
 
         adapter = new TaskListAdapter(getActivity(), R.layout.custom_item_list_view, listItems);
         listView.setAdapter(adapter);
