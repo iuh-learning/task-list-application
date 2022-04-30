@@ -52,13 +52,15 @@ public class DetailListAdapter extends BaseAdapter {
         }
 
         // find id
-        TextView txtID = view.findViewById(R.id.txtName);
+        TextView txtName = view.findViewById(R.id.txtName);
+        TextView txtID = view.findViewById(R.id.txtID);
 
         final ItemDetailList itemDetailList = listItems.get(i);
 
         if(listItems != null && !listItems.isEmpty()) {
             // set tv
-            txtID.setText(String.valueOf(itemDetailList.getNameDetail()) + ". ");
+            txtName.setText(String.valueOf(itemDetailList.getNameDetail()) + ". ");
+            txtID.setText(String.valueOf(itemDetailList.getId()) + ". ");
         }
 
         return view;
