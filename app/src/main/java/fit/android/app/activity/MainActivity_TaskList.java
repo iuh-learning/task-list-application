@@ -3,6 +3,7 @@ package fit.android.app.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +46,12 @@ public class MainActivity_TaskList extends AppCompatActivity {
         edtTask = findViewById(R.id.edtTask);
         btnUpdate = findViewById(R.id.btnUpdate);
 
+        // Nhận
+        ItemTaskList itemTaskList = getItemTaskFromIntent();
+        if(itemTaskList != null) {
+            edtTask.setText(itemTaskList.getNameTask());
+        }
+
         // Add task
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,5 +86,15 @@ public class MainActivity_TaskList extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.idFrameLayoutTaskList, fragmentItemTaskList, "Fragment item task-list.")
                 .commit();
+    }
+
+    // get item task from intent
+    private ItemTaskList getItemTaskFromIntent() {
+        Intent intent = getIntent();
+        String nameTask = intent.getStringExtra("name_task");
+
+        ItemTaskList itemTaskList = dao.findByNameTask(nameTask);
+
+        return  itemTaskList;
     }
 }

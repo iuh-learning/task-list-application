@@ -2,22 +2,27 @@ package fit.android.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import fit.android.app.R;
 import fit.android.app.activity.MainActivity_DetailList;
 import fit.android.app.activity.MainActivity_Register;
+import fit.android.app.activity.MainActivity_TaskList;
 import fit.android.app.model.ItemTaskList;
 
 public class TaskListAdapter extends BaseAdapter {
 
+    // init
     private Context context;
     private int idLayout;
     private List<ItemTaskList> listItems;
@@ -60,6 +65,8 @@ public class TaskListAdapter extends BaseAdapter {
         TextView txtNameTask = view.findViewById(R.id.txtNameTask);
         Button btnNext = view.findViewById(R.id.btnNext);
         Button btnDel = view.findViewById(R.id.btnDelete);
+        final EditText edtNameTask = view.findViewById(R.id.edtTask);
+
 
         final ItemTaskList itemTaskList = listItems.get(i);
 
@@ -69,6 +76,7 @@ public class TaskListAdapter extends BaseAdapter {
             txtNameTask.setText(itemTaskList.getNameTask());
         }
 
+        // Click button Next
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +84,21 @@ public class TaskListAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
+
+        // Click on ListView
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MainActivity_TaskList.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name_task", itemTaskList.getNameTask());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+                notifyDataSetChanged();
+                Toast.makeText(context, "Index: " + itemTaskList.getNameTask(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 }

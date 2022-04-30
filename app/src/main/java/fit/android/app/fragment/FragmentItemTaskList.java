@@ -73,18 +73,24 @@ public class FragmentItemTaskList extends Fragment {
         // find id
         listView = view.findViewById(R.id.idListViewTaskList);
 
-        listItems = dao.getAll("baotran@gmail.com");
-        adapter = new TaskListAdapter(getActivity(), R.layout.custom_item_list_view, listItems);
-        listView.setAdapter(adapter);
+        // load data to listview
+        loadDataToListView();
 
         // Click on listview
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Listview", Toast.LENGTH_SHORT).show();
 //            }
 //        });
 
         return view;
+    }
+
+    // load listview
+    public void loadDataToListView() {
+        listItems = dao.getAll("baotran@gmail.com");
+        adapter = new TaskListAdapter(getActivity(), R.layout.custom_item_list_view, listItems);
+        listView.setAdapter(adapter);
     }
 }
