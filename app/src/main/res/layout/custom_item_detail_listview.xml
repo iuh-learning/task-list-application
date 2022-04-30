@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
+    android:layout_marginTop="20dp"
     android:background="@drawable/custom_button_add_task"
     android:backgroundTint="#C284FF">
 
@@ -13,20 +13,21 @@
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:text="1.Item 1"
-        android:textColor="#000000"
+        android:textColor="#FAF9F9"
         android:textSize="24sp"
         android:textStyle="normal|bold|italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/txtID"
+        app:layout_constraintStart_toEndOf="@+id/txtID"
+        app:layout_constraintTop_toTopOf="@+id/txtID" />
 
     <Button
         android:id="@+id/btnDelete"
         android:layout_width="68dp"
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_button_add_task"
         android:backgroundTint="#F60000"
         android:text="X"
         android:textColor="#FAFAFA"
@@ -35,4 +36,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/txtName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txtName" />
+
+    <TextView
+        android:id="@+id/txtID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="13dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="normal|bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
