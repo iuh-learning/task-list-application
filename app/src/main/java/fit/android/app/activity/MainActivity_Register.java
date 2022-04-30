@@ -88,5 +88,4 @@ public class MainActivity_Register extends AppCompatActivity {
         txtConfirmPasswordRegister.setText("");
     }
 
-
 }
