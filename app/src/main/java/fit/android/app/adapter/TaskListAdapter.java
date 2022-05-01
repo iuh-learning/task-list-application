@@ -18,6 +18,8 @@ import fit.android.app.R;
 import fit.android.app.activity.MainActivity_DetailList;
 import fit.android.app.activity.MainActivity_Register;
 import fit.android.app.activity.MainActivity_TaskList;
+import fit.android.app.dao.ItemTaskListDAO;
+import fit.android.app.database.AppDatabase;
 import fit.android.app.model.ItemTaskList;
 
 public class TaskListAdapter extends BaseAdapter {
@@ -85,6 +87,25 @@ public class TaskListAdapter extends BaseAdapter {
                 bundle.putString("name_task", listItems.get(i).getNameTask());
                 intent.putExtras(bundle);
 
+                context.startActivity(intent);
+            }
+        });
+
+        // Click button Delete Task
+        btnDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // delete
+                ItemTaskListDAO dao = AppDatabase.getDatabase(context).itemTaskListDAO();
+                dao.delete(itemTaskList);
+
+                // reload
+                Intent intent = new Intent(context, MainActivity_TaskList.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("user_email", listItems.get(i).getEmail());
+                intent.putExtras(bundle);
+
+                Toast.makeText(context, "Delete.", Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
             }
         });

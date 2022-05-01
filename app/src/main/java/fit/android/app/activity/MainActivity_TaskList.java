@@ -77,7 +77,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
         UserDAO userDao = AppDatabase.getDatabase(this).userDAO();
         String fullName = userDao.findByEmail(emailFromLogin).getFullName();
         // set Textview name
-        tvName.setText(fullName);
+        tvName.setText("Hi, " + fullName);
 
         // Add task
         btnAdd.setOnClickListener(new View.OnClickListener() {
