@@ -102,6 +102,8 @@ public class MainActivity_Register extends AppCompatActivity {
         txtEmailRegister.setText("");
         txtPasswordRegister.setText("");
         txtConfirmPasswordRegister.setText("");
+
+        txtFullNameRegister.requestFocus();
     }
 
     private void registerAndAddAcountToFirebase(String email, String password, String fullName) {
@@ -136,7 +138,7 @@ public class MainActivity_Register extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity_Register.this, "Register fail", Toast.LENGTH_SHORT).show();
+                            Message.showMessage(MainActivity_Register.this,"Message", "Register account fail!");
                         }
                     }
                 });
@@ -148,7 +150,7 @@ public class MainActivity_Register extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         for (User u : users) {
-            mapUsers.put(u.getFullName(), u);
+            mapUsers.put(u.getId() + "", u);
         }
 
         try {
