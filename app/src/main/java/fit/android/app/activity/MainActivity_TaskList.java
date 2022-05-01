@@ -34,7 +34,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
     // init
     private Button btnAdd, btnUpdate;
     private EditText edtTask;
-    private TextView tvLogout;
+    private TextView tvName, tvLogout;
 
     private AppDatabase db;
     private ItemTaskListDAO dao;
@@ -60,6 +60,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
         btnAdd = findViewById(R.id.btnAdd);
         edtTask = findViewById(R.id.edtTask);
         btnUpdate = findViewById(R.id.btnUpdate);
+        tvName = findViewById(R.id.txtName);
         tvLogout = findViewById(R.id.tvLogout);
 
         // Nhận name from TaskListApdapter
@@ -71,6 +72,12 @@ public class MainActivity_TaskList extends AppCompatActivity {
         // Nhận email from MainActivity_Login
         Intent intent = getIntent();
         String emailFromLogin = intent.getStringExtra("user_email");
+
+        // get fullname
+        UserDAO userDao = AppDatabase.getDatabase(this).userDAO();
+        String fullName = userDao.findByEmail(emailFromLogin).getFullName();
+        // set Textview name
+        tvName.setText("Hi, " + fullName);
 
         // Add task
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +179,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
         edtTask.requestFocus();
     }
 
+    // save data to firebase
     private void saveDataFromClientToFireBase(String email) {
         UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
 

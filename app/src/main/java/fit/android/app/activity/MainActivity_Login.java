@@ -96,6 +96,7 @@ public class MainActivity_Login extends AppCompatActivity {
                 for (DataSnapshot sn : snapshot.getChildren()) {
 
                     User user = sn.getValue(User.class);
+                    Log.d(TAG, user.toString());
                     try{
                         userDAO.insert(user);
                     }catch (Exception e) {
