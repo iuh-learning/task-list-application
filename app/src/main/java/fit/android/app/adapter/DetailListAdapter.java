@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,8 +15,10 @@ import java.util.List;
 
 import fit.android.app.R;
 import fit.android.app.activity.MainActivity_DetailList;
+import fit.android.app.dao.ItemDetailListDAO;
+import fit.android.app.database.AppDatabase;
+import fit.android.app.fragment.FragmentDetailTaskList;
 import fit.android.app.model.ItemDetailList;
-import fit.android.app.model.ItemTaskList;
 
 public class DetailListAdapter extends BaseAdapter {
 
@@ -23,6 +26,7 @@ public class DetailListAdapter extends BaseAdapter {
     private int idLayout;
     private List<ItemDetailList> listItems;
     private int index = -1;
+
 
     // Constructor
     public DetailListAdapter(Context context, int idLayout, List<ItemDetailList> listItems) {
@@ -58,13 +62,14 @@ public class DetailListAdapter extends BaseAdapter {
         // find id
         TextView txtName = view.findViewById(R.id.txtName);
         TextView txtID = view.findViewById(R.id.txtID);
+        Button btnDelete = view.findViewById(R.id.btnDeleteDetail);
 
         final ItemDetailList itemDetailList = listItems.get(i);
 
         if(listItems != null && !listItems.isEmpty()) {
             // set tv
             txtName.setText(String.valueOf(itemDetailList.getNameDetail()) + ". ");
-            txtID.setText(String.valueOf(itemDetailList.getId()) + ". ");
+            txtID.setText( (i+1) + "");
         }
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -73,13 +78,28 @@ public class DetailListAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, MainActivity_DetailList.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id_taskDetail",listItems.get(i).getId());
-                bundle.putInt("id_task",listItems.get(i).getId());
+                bundle.putInt("id_task",listItems.get(i).getTaskID());
                 Toast.makeText(context, listItems.get(i).getId()+"" + listItems.get(i).getNameDetail() + "", Toast.LENGTH_SHORT).show();
 
                 intent.putExtras(bundle);
 
                 context.startActivity(intent);
                 notifyDataSetChanged();
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int idTask = itemDetailList.getTaskID();
+                ItemDetailListDAO itemDetailListDAO = AppDatabase.getDatabase(context).itemDetailListDAO();
+                itemDetailListDAO.delete(itemDetailList);
+
+                Intent intent = new Intent(context.getApplicationContext(), MainActivity_DetailList.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id_task",idTask);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
         return view;
