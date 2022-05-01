@@ -172,6 +172,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
         edtTask.requestFocus();
     }
 
+    // save data to firebase
     private void saveDataFromClientToFireBase(String email) {
         UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
         List<ItemTaskList> list = dao.getAll(email);
