@@ -9,15 +9,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import fit.android.app.R;
 import fit.android.app.activity.MainActivity_DetailList;
+import fit.android.app.activity.MainActivity_Login;
 import fit.android.app.activity.MainActivity_TaskList;
 import fit.android.app.dao.ItemTaskListDAO;
 import fit.android.app.database.AppDatabase;
+import fit.android.app.helper.Message;
+import fit.android.app.helper.MessageBoxListener;
 import fit.android.app.model.ItemTaskList;
 
 public class TaskListAdapter extends BaseAdapter {
@@ -64,8 +69,6 @@ public class TaskListAdapter extends BaseAdapter {
         TextView txtNameTask = view.findViewById(R.id.txtNameTask);
         Button btnNext = view.findViewById(R.id.btnNext);
         Button btnDel = view.findViewById(R.id.btnDeleteDetail);
-        final EditText edtNameTask = view.findViewById(R.id.edtTask);
-
 
         final ItemTaskList itemTaskList = listItems.get(i);
 
@@ -95,18 +98,26 @@ public class TaskListAdapter extends BaseAdapter {
         btnDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // delete
                 ItemTaskListDAO dao = AppDatabase.getDatabase(context).itemTaskListDAO();
-                dao.delete(itemTaskList);
 
-                // reload
-                Intent intent = new Intent(context, MainActivity_TaskList.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("user_email", listItems.get(i).getEmail());
-                intent.putExtras(bundle);
+                Message.showConfirmMessgae(context, "Message", "Do you want to delete?", new MessageBoxListener() {
+                    @Override
+                    public void result(int result) {
+                        if(result == 1) {
+                            // delete
+                            dao.delete(itemTaskList);
 
-                Toast.makeText(context, "Delete.", Toast.LENGTH_SHORT).show();
-                context.startActivity(intent);
+                            // reload
+                            Intent intent = new Intent(context, MainActivity_TaskList.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("user_email", listItems.get(i).getEmail());
+                            intent.putExtras(bundle);
+
+                            Toast.makeText(context, "Deleted successfully.", Toast.LENGTH_SHORT).show();
+                            context.startActivity(intent);
+                        }
+                    }
+                });
             }
         });
 

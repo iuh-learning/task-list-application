@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/HOC_2022/LTTBDD/Project/demo_app/task-list-management-application/app/src/main/res/layout/activity_main_task_list.xml" value="0.25" />
         <entry key="..\:/HOC_2022/LTTBDD/Project/demo_app/task-list-management-application/app/src/main/res/layout/activity_main_your_detail.xml" value="0.25" />
+        <entry key="..\:/HOC_2022/LTTBDD/Project/demo_app/task-list-management-application/app/src/main/res/layout/custom_item_detail_listview.xml" value="0.25" />
         <entry key="..\:/HOC_2022/LTTBDD/Project/demo_app/task-list-management-application/app/src/main/res/layout/custom_item_list_view.xml" value="0.17527173913043478" />
         <entry key="..\:/HOC_2022/LTTBDD/Project/demo_app/task-list-management-application/app/src/main/res/layout/fragment_detail_task_list.xml" value="0.25" />
         <entry key="..\:/HOC_2022/LTTBDD/Project/demo_app/task-list-management-application/app/src/main/res/layout/fragment_item_task_list.xml" value="0.17527173913043478" />
