@@ -175,18 +175,22 @@ public class MainActivity_TaskList extends AppCompatActivity {
     // save data to firebase
     private void saveDataFromClientToFireBase(String email) {
         UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
+
         List<ItemTaskList> list = dao.getAll(email);
-        Map<String, ItemTaskList> mapUsers = new HashMap<>();
+
+        // get only name task -> String
+        Map<String, String> mapTasks = new HashMap<>();
+
         mDatabase = FirebaseDatabase.getInstance().getReference("/users");
 
-        String name = userDAO.findByEmail(email).getFullName();
+        int id = userDAO.findByEmail(email).getId();
 
         for (ItemTaskList item : list) {
-            mapUsers.put(""+item.getId(), item);
+            mapTasks.put(""+item.getId(), item.getNameTask());
         }
 
         try {
-            mDatabase.child(name).child("list-task").setValue(mapUsers);
+            mDatabase.child(id + "").child("list-task").setValue(mapTasks);
 
         }catch (Exception e) {
             e.printStackTrace();
