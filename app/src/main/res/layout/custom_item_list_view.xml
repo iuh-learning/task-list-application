@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="@+id/txtID" />
 
     <Button
-        android:id="@+id/btnDelete"
+        android:id="@+id/btnDeleteDetail"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -66,8 +66,8 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/btnDelete"
-        app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-        app:layout_constraintTop_toTopOf="@+id/btnDelete"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDeleteDetail"
+        app:layout_constraintEnd_toStartOf="@+id/btnDeleteDetail"
+        app:layout_constraintTop_toTopOf="@+id/btnDeleteDetail"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

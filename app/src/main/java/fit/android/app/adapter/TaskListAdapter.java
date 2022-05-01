@@ -10,13 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import fit.android.app.R;
 import fit.android.app.activity.MainActivity_DetailList;
-import fit.android.app.activity.MainActivity_Register;
 import fit.android.app.activity.MainActivity_TaskList;
 import fit.android.app.model.ItemTaskList;
 
@@ -63,7 +61,7 @@ public class TaskListAdapter extends BaseAdapter {
         TextView txtID = view.findViewById(R.id.txtID);
         TextView txtNameTask = view.findViewById(R.id.txtNameTask);
         Button btnNext = view.findViewById(R.id.btnNext);
-        Button btnDel = view.findViewById(R.id.btnDelete);
+        Button btnDel = view.findViewById(R.id.btnDeleteDetail);
         final EditText edtNameTask = view.findViewById(R.id.edtTask);
 
 
@@ -82,7 +80,9 @@ public class TaskListAdapter extends BaseAdapter {
                 // Get name task to Task Details
                 Intent intent = new Intent(context, MainActivity_DetailList.class);
                 Bundle bundle = new Bundle();
+                bundle.putInt("id_task", listItems.get(i).getId());
                 bundle.putString("name_task", listItems.get(i).getNameTask());
+                bundle.putString("user_email",listItems.get(i).getEmail());
                 intent.putExtras(bundle);
 
                 context.startActivity(intent);
