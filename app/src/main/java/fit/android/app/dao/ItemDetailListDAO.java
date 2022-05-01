@@ -22,6 +22,9 @@ public interface ItemDetailListDAO {
     @Query("SELECT * FROM item_detail_list WHERE name_detail LIKE :name")
     ItemDetailList findByNameTask(String name);
 
+    @Query("SELECT * FROM item_detail_list WHERE id LIKE :task_id")
+    ItemDetailList findByIDTask(int task_id);
+
     //insert item
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(ItemDetailList itemDetailList);

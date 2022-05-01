@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/btnADD" />
 
     <View
         android:id="@+id/view2"
@@ -26,10 +26,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNameTask" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnUPDATE"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_border_input_task"
@@ -39,12 +39,12 @@
         android:textColor="#FAFAFA"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toTopOf="@+id/button2" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnADD"
+        app:layout_constraintEnd_toEndOf="@+id/txtEdit"
+        app:layout_constraintTop_toTopOf="@+id/btnADD" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtNameTask"
         android:layout_width="128dp"
         android:layout_height="23dp"
         android:layout_marginStart="16dp"
@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/txtEdit"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
@@ -92,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnADD"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -103,8 +103,8 @@
         android:textColor="#FBFBFB"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintStart_toStartOf="@+id/txtEdit"
+        app:layout_constraintTop_toBottomOf="@+id/txtEdit" />
 
     <TextView
         android:id="@+id/textView7"
@@ -140,7 +140,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txtBackToList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -149,9 +149,9 @@
         android:textSize="18sp"
         android:fontFamily="@font/solway_medium"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintBottom_toBottomOf="@+id/txtNameTask"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/txtNameTask"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
