@@ -19,8 +19,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -64,37 +67,8 @@ public class MainActivity_Register extends AppCompatActivity {
         //get userDAO use method
         userDAO = database.userDAO();
 
-        //event click text view move log in display
-        tvlogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity_Login.class);
-                startActivity(intent);
-            }
-        });
-
-        //event click button register then add user into SQLite
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String fullName = txtFullNameRegister.getText().toString().trim();
-                String email = txtEmailRegister.getText().toString().trim();
-                String password = txtPasswordRegister.getText().toString().trim();
-                String confirmPass = txtConfirmPasswordRegister.getText().toString().trim();
-
-                if(fullName.equals("") || email.equals("") || password.equals("") || confirmPass.equals("")) {
-                    Message.showMessage(MainActivity_Register.this,
-                                "Message", "Please enter all the information!");
-                }else {
-                    if(confirmPass.equals(password)) {
-                        //call function
-                        registerAndAddAcountToFirebase(email, password, fullName);
-                    }else {
-                        Message.showMessage(MainActivity_Register.this,"Message", "Confirm password must equal password!");
-                    }
-                }
-            }
-        });
+        //call func
+        appEventHandle();
     }
 
     private void clearInput() {
@@ -117,7 +91,7 @@ public class MainActivity_Register extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            try{
+                            try {
                                 //1. if create email - password successfully then create model user
                                 User user = new User(email, fullName, password);
 
@@ -128,17 +102,17 @@ public class MainActivity_Register extends AppCompatActivity {
                                 clearInput();
 
                                 //4. show message notification
-                                Message.showMessage(MainActivity_Register.this,"Message", "Create account success!");
+                                Message.showMessage(MainActivity_Register.this, "Message", "Create account success!");
 
                                 //5. save data from database client to firebase
                                 saveDataFromClientToFireBase();
-                            }catch (Exception e) {
-                                Message.showMessage(MainActivity_Register.this,"Message", "Create account fail!");
+                            } catch (Exception e) {
+                                Message.showMessage(MainActivity_Register.this, "Message", "Create account fail!");
                             }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Message.showMessage(MainActivity_Register.this,"Message", "Register account fail!");
+                            Message.showMessage(MainActivity_Register.this, "Message", "Email was exist!");
                         }
                     }
                 });
@@ -155,8 +129,42 @@ public class MainActivity_Register extends AppCompatActivity {
 
         try {
             mDatabase.child("users").setValue(mapUsers);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void appEventHandle() {
+        //event click text view move log in display
+        tvlogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity_Login.class);
+                startActivity(intent);
+            }
+        });
+
+        //event click button register then add user into SQLite
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String fullName = txtFullNameRegister.getText().toString().trim();
+                String email = txtEmailRegister.getText().toString().trim();
+                String password = txtPasswordRegister.getText().toString().trim();
+                String confirmPass = txtConfirmPasswordRegister.getText().toString().trim();
+
+                if (fullName.equals("") || email.equals("") || password.equals("") || confirmPass.equals("")) {
+                    Message.showMessage(MainActivity_Register.this,
+                            "Message", "Please enter all the information!");
+                } else {
+                    if (confirmPass.equals(password)) {
+                        //call function
+                        registerAndAddAcountToFirebase(email, password, fullName);
+                    } else {
+                        Message.showMessage(MainActivity_Register.this, "Message", "Confirm password must equal password!");
+                    }
+                }
+            }
+        });
     }
 }
