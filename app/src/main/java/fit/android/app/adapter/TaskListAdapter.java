@@ -82,6 +82,7 @@ public class TaskListAdapter extends BaseAdapter {
                 // Get name task to Task Details
                 Intent intent = new Intent(context, MainActivity_DetailList.class);
                 Bundle bundle = new Bundle();
+                bundle.putInt("id_task", listItems.get(i).getId());
                 bundle.putString("name_task", listItems.get(i).getNameTask());
                 intent.putExtras(bundle);
 

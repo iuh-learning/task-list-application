@@ -1,15 +1,19 @@
 package fit.android.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import fit.android.app.R;
+import fit.android.app.activity.MainActivity_DetailList;
 import fit.android.app.model.ItemDetailList;
 import fit.android.app.model.ItemTaskList;
 
@@ -63,6 +67,21 @@ public class DetailListAdapter extends BaseAdapter {
             txtID.setText(String.valueOf(itemDetailList.getId()) + ". ");
         }
 
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MainActivity_DetailList.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id_taskDetail",listItems.get(i).getId());
+                bundle.putInt("id_task",listItems.get(i).getId());
+                Toast.makeText(context, listItems.get(i).getId()+"" + listItems.get(i).getNameDetail() + "", Toast.LENGTH_SHORT).show();
+
+                intent.putExtras(bundle);
+
+                context.startActivity(intent);
+                notifyDataSetChanged();
+            }
+        });
         return view;
     }
 }

@@ -19,9 +19,15 @@ public class ItemDetailList {
     @Ignore
     public ItemDetailList() {
     }
-
+    @Ignore
     public ItemDetailList(int id, String nameDetail, int taskID) {
         this.id = id;
+        this.nameDetail = nameDetail;
+        this.taskID = taskID;
+    }
+    // Constructor (add task)
+
+    public ItemDetailList(String nameDetail, int taskID) {
         this.nameDetail = nameDetail;
         this.taskID = taskID;
     }
