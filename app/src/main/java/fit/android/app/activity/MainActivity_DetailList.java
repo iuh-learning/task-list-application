@@ -2,14 +2,19 @@ package fit.android.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +26,6 @@ import fit.android.app.dao.ItemTaskListDAO;
 import fit.android.app.dao.UserDAO;
 import fit.android.app.database.AppDatabase;
 import fit.android.app.fragment.FragmentDetailTaskList;
-import fit.android.app.fragment.FragmentItemTaskList;
 import fit.android.app.helper.Message;
 import fit.android.app.helper.MessageBoxListener;
 import fit.android.app.model.ItemDetailList;
@@ -38,7 +42,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
 
     private AppDatabase db;
     private ItemDetailListDAO dao;
-
+    private ItemTaskListDAO itemTaskListDAO;
     private DatabaseReference mDatabase;
 
     @Override
@@ -54,6 +58,8 @@ public class MainActivity_DetailList extends AppCompatActivity {
 
         // DAO
         dao = db.itemDetailListDAO();
+        itemTaskListDAO = db.itemTaskListDAO();
+
         // find id
         tvNameTask = findViewById(R.id.txtNameTask);
         tvEdit = findViewById(R.id.txtEdit);
@@ -61,22 +67,32 @@ public class MainActivity_DetailList extends AppCompatActivity {
         btnUPDATE = findViewById(R.id.btnUPDATE);
         btnADD = findViewById(R.id.btnADD);
 
-        // Nhận name task from page Task List
+        // Get id from page Task List
         Intent intent = getIntent();
-        String nameTask = intent.getStringExtra("name_task");
-        tvNameTask.setText(nameTask);
+        int taskID = intent.getIntExtra("id_task", -1);
+        String statusDel = intent.getStringExtra("status");
 
-        //Nhận mail
+        //Get mail
         String mail = intent.getStringExtra("user_email");
-        // Nhận name
+
+        //get data
+        if(dao.getAll(taskID).isEmpty()) {
+            getDataUserFromFirebaseSaveToRoomDatabase(taskID, mail);
+        }
+
+        // Get name
         ItemDetailList itemDetailList = getNameTaskFromIntent();
         if (itemDetailList != null) {
             tvEdit.setText(itemDetailList.getNameDetail());
         }
 
-        // Nhận taskID
-        Bundle bundle = getIntent().getExtras();
-        int taskID = bundle.getInt("id_task");
+        String nameTask = itemTaskListDAO.findByIdTask(taskID).getNameTask();
+        tvNameTask.setText(nameTask);
+
+        if(statusDel != null && statusDel.equals("del")) {{
+            saveDataFromClientToFireBase(taskID, mail);
+        }}
+
 
         //add
         btnADD.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +110,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
                     return;
                 }
                 dao.insert(new ItemDetailList(txtEdit, taskID));
-                saveDataFromClientToFireBas(taskID,mail);
+                saveDataFromClientToFireBase(taskID, mail);
                 reLoadListView();
                 clearInput();
             }
@@ -121,6 +137,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
                         if (result == 1) {
                             itemDetailList.setNameDetail(txtEdit);
                             dao.update(itemDetailList);
+                            saveDataFromClientToFireBase(taskID, mail);
                             reLoadListView();
                             clearInput();
                         }
@@ -166,23 +183,55 @@ public class MainActivity_DetailList extends AppCompatActivity {
     }
 
     // save data to firebase
-    private void saveDataFromClientToFireBas(int taskID, String mail) {
-        ItemDetailListDAO itemDetailListDAO = AppDatabase.getDatabase(this).itemDetailListDAO();
+    private void saveDataFromClientToFireBase(int taskID, String mail) {
+
         List<ItemDetailList> list = dao.getAll(taskID);
-        Map<String, String> mapUsers = new HashMap<>();
+
+        Map<String, ItemDetailList> mapItemDetails = new HashMap<>();
+
         UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
+        ItemTaskListDAO itemTaskListDAO = AppDatabase.getDatabase(this).itemTaskListDAO();
+
         int idUser = userDAO.findByEmail(mail).getId();
-        mDatabase = FirebaseDatabase.getInstance().getReference("/users/"+idUser+"/list-task/"+taskID);
+        String nameTask = itemTaskListDAO.findByIdTask(taskID).getNameTask();
+        mDatabase = FirebaseDatabase.getInstance().getReference("/users/"+ idUser +"/list-task/"+ taskID + "/" + nameTask);
 
         for (ItemDetailList item : list) {
-            mapUsers.put("" + item.getId(), item.getNameDetail());
+            mapItemDetails.put("" + item.getId(), item);
         }
 
         try {
-            mDatabase.child("detail-task").setValue(mapUsers);
-
+            mDatabase.child("detail-task").setValue(mapItemDetails);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void getDataUserFromFirebaseSaveToRoomDatabase(int taskID, String email) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
+        int userId = userDAO.findByEmail(email).getId();
+        String nameTask = itemTaskListDAO.findByIdTask(taskID).getNameTask();
+        mDatabase.child("users/" + userId + "/list-task/" + taskID + "/" + nameTask + "/detail-task").addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot sn : snapshot.getChildren()) {
+                    ItemDetailList itemDetailList = sn.getValue(ItemDetailList.class);
+                    Log.d("=============> LOG: ", itemDetailList.toString());
+                    try{
+                        dao.insert(itemDetailList);
+                    }catch (Exception e) {
+                        Log.e("ERROR:", "INSERT FAIL");
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("ERROR: ", "loadPost:onCancelled", error.toException());
+            }
+        });
     }
 }

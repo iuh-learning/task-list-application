@@ -25,6 +25,10 @@ public interface ItemTaskListDAO {
     @Query("SELECT * FROM item_task_list WHERE name_task LIKE :name")
     ItemTaskList findByNameTask(String name);
 
+    //find user by id task
+    @Query("SELECT * FROM item_task_list WHERE id LIKE :id")
+    ItemTaskList findByIdTask(int id);
+
     //insert item
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(ItemTaskList itemTaskList);
