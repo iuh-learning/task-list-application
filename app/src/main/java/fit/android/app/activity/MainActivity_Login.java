@@ -16,6 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import fit.android.app.R;
 import fit.android.app.dao.UserDAO;
@@ -30,6 +35,7 @@ public class MainActivity_Login extends AppCompatActivity {
     private EditText txtEmail;
     private EditText txtPassword;
     private FirebaseAuth mAuth;
+    private UserDAO userDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +48,16 @@ public class MainActivity_Login extends AppCompatActivity {
         txtEmail = findViewById(R.id.txtEmail);
         txtPassword = findViewById(R.id.txtPassword);
 
-        //event click text view move register display
-        tvRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity_Register.class);
-                startActivity(intent);
-            }
-        });
+        //room database
+        userDAO = AppDatabase.getDatabase(this).userDAO();
 
-        //event click text view move register display
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        //init app no user then get data user
+        if(userDAO.getAll().isEmpty()) {
+            getDataUserFromFirebaseSaveToRoomDatabase();
+        }
 
-                String email = txtEmail.getText().toString().trim();
-                String password = txtPassword.getText().toString().trim();
-
-                if(email.equals("") || password.equals("")) {
-                    Message.showMessage(MainActivity_Login.this, "Message", "Please enter all the information to login!");
-                }else {
-                    signInWithFirebase(email, password);
-                }
-            }
-        });
+        //call func
+        appEventHandle();
     }
 
     private void signInWithFirebase(String email, String password) {
@@ -92,6 +84,59 @@ public class MainActivity_Login extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void getDataUserFromFirebaseSaveToRoomDatabase() {
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mDatabase.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot sn : snapshot.getChildren()) {
+
+                    User user = sn.getValue(User.class);
+                    try{
+                        userDAO.insert(user);
+                    }catch (Exception e) {
+                        Log.e("ERROR:", "INSERT FAIL");
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "loadPost:onCancelled", error.toException());
+            }
+        });
+    }
+
+    private void appEventHandle() {
+        //event click text view move register display
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity_Register.class);
+                startActivity(intent);
+            }
+        });
+
+        //event click text view move register display
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String email = txtEmail.getText().toString().trim();
+                String password = txtPassword.getText().toString().trim();
+
+                if(email.equals("") || password.equals("")) {
+                    Message.showMessage(MainActivity_Login.this, "Message", "Please enter all the information to login!");
+                }else {
+                    signInWithFirebase(email, password);
+                }
+            }
+        });
     }
 
 }
