@@ -51,9 +51,6 @@ public class MainActivity_DetailList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_your_detail);
 
-        // Render --> UI Listview (reload listview)
-        reLoadListView();
-
         // SQLite
         db = AppDatabase.getDatabase(MainActivity_DetailList.this);
 
@@ -96,6 +93,8 @@ public class MainActivity_DetailList extends AppCompatActivity {
             saveDataFromClientToFireBase(taskID, mail);
         }}
 
+        // Render --> UI Listview (reload listview)
+        reLoadListView();
 
         //App event handle
         //add

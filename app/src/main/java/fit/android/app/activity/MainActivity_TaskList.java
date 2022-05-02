@@ -57,9 +57,6 @@ public class MainActivity_TaskList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_task_list);
 
-        /*// Render --> UI Listview (reload listview)
-        reLoadListView();*/
-
         // SQLite
         db = AppDatabase.getDatabase(MainActivity_TaskList.this);
 
@@ -74,13 +71,13 @@ public class MainActivity_TaskList extends AppCompatActivity {
         tvName = findViewById(R.id.txtName);
         tvLogout = findViewById(R.id.tvLogout);
 
-        // Nhận name from TaskListApdapter
+        // get name from TaskList Apdapter
         ItemTaskList itemTaskList = getNameTaskFromIntent();
         if(itemTaskList != null) {
             edtTask.setText(itemTaskList.getNameTask());
         }
 
-        // Nhận email from MainActivity_Login
+        // get email from MainActivity_Login
         Intent intent = getIntent();
         String emailFromLogin = intent.getStringExtra("user_email");
         String statusDel = intent.getStringExtra("status");
@@ -93,11 +90,13 @@ public class MainActivity_TaskList extends AppCompatActivity {
             getDataUserFromFirebaseSaveToRoomDatabase(emailFromLogin);
         }
 
+        // Render --> UI Listview (reload listview)
         reLoadListView();
 
         // get fullname
         UserDAO userDao = AppDatabase.getDatabase(this).userDAO();
         String fullName = userDao.findByEmail(emailFromLogin).getFullName();
+
         // set Textview name
         tvName.setText("Hi, " + fullName);
 
@@ -204,9 +203,10 @@ public class MainActivity_TaskList extends AppCompatActivity {
     // save data to firebase
     private void reloadDataFromClientToFireBase(String email) {
         List<ItemTaskList> list = dao.getAll(email);
+        Log.d("SIZE", list.size() + "");
         Map<String, ItemTaskList> mapTasks = new HashMap<>();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("/users");
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
         int id = userDAO.findByEmail(email).getId();
 
@@ -222,27 +222,34 @@ public class MainActivity_TaskList extends AppCompatActivity {
         }
 
         for(ItemTaskList item : list) {
+            Log.d("IDTASK: ", item.getId() + "");
             saveDataTaskDetailFromClientToFireBase(item.getId(), email);
         }
     }
 
     private void saveDataTaskDetailFromClientToFireBase(int taskID, String mail) {
-        List<ItemDetailList> list = itemDetailListDAO.getAll(taskID);
-        Map<String, ItemDetailList> mapUsers = new HashMap<>();
+        try{
+            List<ItemDetailList> list = itemDetailListDAO.getAll(taskID);
+            Map<String, ItemDetailList> mapUsers = new HashMap<>();
 
-        int idUser = userDAO.findByEmail(mail).getId();
-        String nameTask = dao.findByIdTask(taskID).getNameTask();
+            if(list != null) {
+                int idUser = userDAO.findByEmail(mail).getId();
+                String nameTask = dao.findByIdTask(taskID).getNameTask();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("/users/" + idUser + "/list-task/" + taskID + "/" + nameTask);
+                mDatabase = FirebaseDatabase.getInstance().getReference("/users/" + idUser + "/list-task/" + taskID + "/" + nameTask);
 
-        for (ItemDetailList item : list) {
-            mapUsers.put("" + item.getId(), item);
-        }
+                for (ItemDetailList item : list) {
+                    mapUsers.put("" + item.getId(), item);
+                }
 
-        try {
-            mDatabase.child("detail-task").setValue(mapUsers);
-        } catch (Exception e) {
-            e.printStackTrace();
+                try {
+                    mDatabase.child("detail-task").setValue(mapUsers);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch(Exception ex) {
+
         }
     }
 
