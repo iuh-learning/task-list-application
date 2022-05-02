@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,10 +86,15 @@ public class FragmentDetailTaskList extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+
     // load listview
     public void loadDataToListView(int taskID) {
         listItems = dao.getAll(taskID);
-        adapter = new DetailListAdapter(getActivity(), R.layout.custom_item_detail_listview, listItems);
-        listView.setAdapter(adapter);
+        if(listItems.size() != 0) {
+            adapter = new DetailListAdapter(getActivity(), R.layout.custom_item_detail_listview, listItems);
+            listView.setAdapter(adapter);
+        }else {
+            return;
+        }
     }
 }
