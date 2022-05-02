@@ -54,4 +54,13 @@ public class ItemDetailList {
     public void setTaskID(int taskID) {
         this.taskID = taskID;
     }
+
+    @Override
+    public String toString() {
+        return "ItemDetailList[" +
+                "id=" + id +
+                ", nameDetail='" + nameDetail + '\'' +
+                ", taskID=" + taskID +
+                ']';
+    }
 }

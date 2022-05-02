@@ -19,6 +19,7 @@ import fit.android.app.R;
 import fit.android.app.activity.MainActivity_DetailList;
 import fit.android.app.activity.MainActivity_Login;
 import fit.android.app.activity.MainActivity_TaskList;
+import fit.android.app.dao.ItemDetailListDAO;
 import fit.android.app.dao.ItemTaskListDAO;
 import fit.android.app.database.AppDatabase;
 import fit.android.app.helper.Message;
@@ -100,17 +101,21 @@ public class TaskListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 ItemTaskListDAO dao = AppDatabase.getDatabase(context).itemTaskListDAO();
 
-                Message.showConfirmMessgae(context, "Message", "Do you want to delete?", new MessageBoxListener() {
+                Message.showConfirmMessgae(context, "Message",
+                        "Do you want to delete? If you choose Yes then all task detail list deleted", new MessageBoxListener() {
                     @Override
                     public void result(int result) {
                         if(result == 1) {
                             // delete
+                            ItemDetailListDAO itemDetailListDAO = AppDatabase.getDatabase(context).itemDetailListDAO();
+                            itemDetailListDAO.deleteAllByIdTask(itemTaskList.getId());
                             dao.delete(itemTaskList);
 
                             // reload
                             Intent intent = new Intent(context, MainActivity_TaskList.class);
                             Bundle bundle = new Bundle();
                             bundle.putString("user_email", listItems.get(i).getEmail());
+                            bundle.putString("status", "del");
                             intent.putExtras(bundle);
 
                             Toast.makeText(context, "Deleted successfully.", Toast.LENGTH_SHORT).show();
