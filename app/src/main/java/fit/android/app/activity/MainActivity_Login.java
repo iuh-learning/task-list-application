@@ -87,16 +87,13 @@ public class MainActivity_Login extends AppCompatActivity {
     }
 
     private void getDataUserFromFirebaseSaveToRoomDatabase() {
-
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mDatabase.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot sn : snapshot.getChildren()) {
-
                     User user = sn.getValue(User.class);
-                    Log.d(TAG, user.toString());
                     try{
                         userDAO.insert(user);
                     }catch (Exception e) {
@@ -139,5 +136,4 @@ public class MainActivity_Login extends AppCompatActivity {
             }
         });
     }
-
 }

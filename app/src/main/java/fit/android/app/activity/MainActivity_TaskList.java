@@ -46,9 +46,11 @@ public class MainActivity_TaskList extends AppCompatActivity {
 
     private AppDatabase db;
     private ItemTaskListDAO dao;
-
+    private UserDAO userDAO;
+    private ItemDetailListDAO itemDetailListDAO;
     // Firebase
     private DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
 
         // DAO
         dao = db.itemTaskListDAO();
+        userDAO = db.userDAO();
 
         // find id
         btnAdd = findViewById(R.id.btnAdd);
@@ -85,9 +88,8 @@ public class MainActivity_TaskList extends AppCompatActivity {
             reloadDataFromClientToFireBase(emailFromLogin);
         }}
 
-
+        //get data from firebase
         if(dao.getAll(emailFromLogin).isEmpty()) {
-            //get data from firebase
             getDataUserFromFirebaseSaveToRoomDatabase(emailFromLogin);
         }
 
@@ -150,7 +152,6 @@ public class MainActivity_TaskList extends AppCompatActivity {
                             reloadDataFromClientToFireBase(emailFromLogin);
                             reLoadListView();
                             clearInput();
-                            //Message.showMessage(MainActivity_TaskList.this, "Message", "Updated successfully.");
                         }
                     }
                 });
@@ -182,8 +183,6 @@ public class MainActivity_TaskList extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.idFrameLayoutTaskList, fragmentItemTaskList, "Fragment item task-list.")
                 .commit();
-
-        //Load lần đầu không lên data phải chạy lần 2 thì mới lên data
     }
 
     // get name task from intent
@@ -204,11 +203,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
 
     // save data to firebase
     private void reloadDataFromClientToFireBase(String email) {
-        UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
-
         List<ItemTaskList> list = dao.getAll(email);
-
-        // get only name task -> String
         Map<String, ItemTaskList> mapTasks = new HashMap<>();
 
         mDatabase = FirebaseDatabase.getInstance().getReference("/users");
@@ -216,7 +211,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
         int id = userDAO.findByEmail(email).getId();
 
         for (ItemTaskList item : list) {
-            mapTasks.put(""+item.getId(), item);
+            mapTasks.put("" + item.getId(), item);
         }
 
         try {
@@ -232,16 +227,13 @@ public class MainActivity_TaskList extends AppCompatActivity {
     }
 
     private void saveDataTaskDetailFromClientToFireBase(int taskID, String mail) {
-        UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
-        ItemDetailListDAO itemDetailListDAO = AppDatabase.getDatabase(this).itemDetailListDAO();
-
         List<ItemDetailList> list = itemDetailListDAO.getAll(taskID);
-
         Map<String, ItemDetailList> mapUsers = new HashMap<>();
 
         int idUser = userDAO.findByEmail(mail).getId();
         String nameTask = dao.findByIdTask(taskID).getNameTask();
-        mDatabase = FirebaseDatabase.getInstance().getReference("/users/"+ idUser +"/list-task/"+ taskID + "/" + nameTask);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("/users/" + idUser + "/list-task/" + taskID + "/" + nameTask);
 
         for (ItemDetailList item : list) {
             mapUsers.put("" + item.getId(), item);
@@ -255,17 +247,15 @@ public class MainActivity_TaskList extends AppCompatActivity {
     }
 
     private void getDataUserFromFirebaseSaveToRoomDatabase(String email) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
         int userId = userDAO.findByEmail(email).getId();
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
-        mDatabase.child("users/" + userId + "/list-task").addValueEventListener(new ValueEventListener() {
+        mDatabase.child(userId + "/list-task").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot sn : snapshot.getChildren()) {
                     ItemTaskList itemTaskList = sn.getValue(ItemTaskList.class);
-                    Log.d("=============> LOG: ", itemTaskList.toString());
                     try{
                         dao.insert(itemTaskList);
                     }catch (Exception e) {
@@ -273,6 +263,9 @@ public class MainActivity_TaskList extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+
+                //get data success then load listview now
+                reLoadListView();
             }
 
             @Override

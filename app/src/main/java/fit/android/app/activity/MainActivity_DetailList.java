@@ -43,6 +43,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
     private AppDatabase db;
     private ItemDetailListDAO dao;
     private ItemTaskListDAO itemTaskListDAO;
+    private UserDAO userDAO;
     private DatabaseReference mDatabase;
 
     @Override
@@ -59,6 +60,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
         // DAO
         dao = db.itemDetailListDAO();
         itemTaskListDAO = db.itemTaskListDAO();
+        userDAO = db.userDAO();
 
         // find id
         tvNameTask = findViewById(R.id.txtNameTask);
@@ -86,6 +88,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
             tvEdit.setText(itemDetailList.getNameDetail());
         }
 
+        //set name detail task after click item
         String nameTask = itemTaskListDAO.findByIdTask(taskID).getNameTask();
         tvNameTask.setText(nameTask);
 
@@ -94,16 +97,19 @@ public class MainActivity_DetailList extends AppCompatActivity {
         }}
 
 
+        //App event handle
         //add
         btnADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String txtEdit = tvEdit.getText().toString().trim();
+
                 // check null
                 if (txtEdit.isEmpty()) {
                     Message.showMessage(MainActivity_DetailList.this, "Message", "Task detail not null!");
                     return;
                 }
+
                 // check name detail
                 if (dao.findByNameTask(txtEdit) != null) {
                     Message.showMessage(MainActivity_DetailList.this, "Message", "Task detail already exists!");
@@ -116,21 +122,25 @@ public class MainActivity_DetailList extends AppCompatActivity {
             }
         });
 
+
         //Update
         btnUPDATE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String txtEdit = tvEdit.getText().toString().trim();
+
                 // check null
                 if (txtEdit.isEmpty()) {
                     Message.showMessage(MainActivity_DetailList.this, "Message", "Task detail not null!");
                     return;
                 }
+
                 // check name detail
                 if (dao.findByNameTask(txtEdit) != null) {
                     Message.showMessage(MainActivity_DetailList.this, "Message", "Task detail already exists!");
                     return;
                 }
+
                 Message.showConfirmMessgae(MainActivity_DetailList.this, "Message", "Do you want to update?", new MessageBoxListener() {
                     @Override
                     public void result(int result) {
@@ -175,22 +185,18 @@ public class MainActivity_DetailList extends AppCompatActivity {
     // get id task detail from intent
     private ItemDetailList getNameTaskFromIntent() {
         Bundle bundle = getIntent().getExtras();
-        int taskID1 = bundle.getInt("id_taskDetail");
+        int taskID = bundle.getInt("id_taskDetail");
 
-        ItemDetailList itemDetailList = dao.findByIDTask(taskID1);
+        ItemDetailList itemDetailList = dao.findByIDTask(taskID);
 
         return itemDetailList;
     }
 
     // save data to firebase
     private void saveDataFromClientToFireBase(int taskID, String mail) {
-
         List<ItemDetailList> list = dao.getAll(taskID);
 
         Map<String, ItemDetailList> mapItemDetails = new HashMap<>();
-
-        UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
-        ItemTaskListDAO itemTaskListDAO = AppDatabase.getDatabase(this).itemTaskListDAO();
 
         int idUser = userDAO.findByEmail(mail).getId();
         String nameTask = itemTaskListDAO.findByIdTask(taskID).getNameTask();
@@ -208,17 +214,16 @@ public class MainActivity_DetailList extends AppCompatActivity {
     }
 
     private void getDataUserFromFirebaseSaveToRoomDatabase(int taskID, String email) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        UserDAO userDAO = AppDatabase.getDatabase(this).userDAO();
         int userId = userDAO.findByEmail(email).getId();
         String nameTask = itemTaskListDAO.findByIdTask(taskID).getNameTask();
-        mDatabase.child("users/" + userId + "/list-task/" + taskID + "/" + nameTask + "/detail-task").addValueEventListener(new ValueEventListener() {
+        mDatabase = FirebaseDatabase.getInstance().getReference("users/" + userId + "/list-task/" + taskID + "/" + nameTask);
+
+        mDatabase.child("/detail-task").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot sn : snapshot.getChildren()) {
                     ItemDetailList itemDetailList = sn.getValue(ItemDetailList.class);
-                    Log.d("=============> LOG: ", itemDetailList.toString());
                     try{
                         dao.insert(itemDetailList);
                     }catch (Exception e) {
@@ -226,6 +231,8 @@ public class MainActivity_DetailList extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+
+                reLoadListView();
             }
 
             @Override
@@ -234,4 +241,6 @@ public class MainActivity_DetailList extends AppCompatActivity {
             }
         });
     }
+
+
 }
