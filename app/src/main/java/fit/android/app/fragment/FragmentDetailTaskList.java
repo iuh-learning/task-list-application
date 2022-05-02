@@ -1,5 +1,6 @@
 package fit.android.app.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,9 @@ import java.util.List;
 import fit.android.app.R;
 import fit.android.app.adapter.DetailListAdapter;
 import fit.android.app.adapter.TaskListAdapter;
+import fit.android.app.dao.ItemDetailListDAO;
+import fit.android.app.dao.ItemTaskListDAO;
+import fit.android.app.database.AppDatabase;
 import fit.android.app.model.ItemDetailList;
 import fit.android.app.model.ItemTaskList;
 
@@ -56,22 +60,35 @@ public class FragmentDetailTaskList extends Fragment {
     private DetailListAdapter adapter;
     private List<ItemDetailList> listItems;
     private ListView listView;
+
+    private AppDatabase db;
+    private ItemDetailListDAO dao;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_task_list, container, false);
 
+        // SQLite
+        db = AppDatabase.getDatabase(getActivity());
+
+        // DAO
+        dao = db.itemDetailListDAO();
+
         // find id
         listView = view.findViewById(R.id.listviewDetail);
 
-        listItems = new ArrayList<>();
-        listItems.add(new ItemDetailList(1, "Chở gái",1));
-        listItems.add(new ItemDetailList(2, "Rút tiền",1));
-        listItems.add(new ItemDetailList(3, "Mua thực phẩm chức năng ",1));
+       // Intent intent = getActivity().getIntent();
+        Bundle bundle = getActivity().getIntent().getExtras();
+        int taskID = bundle.getInt("id_task");
 
-        adapter = new DetailListAdapter(getActivity(), R.layout.custom_item_detail_listview, listItems);
-        listView.setAdapter(adapter);
+        loadDataToListView(taskID);
         // Inflate the layout for this fragment
         return view;
+    }
+    // load listview
+    public void loadDataToListView(int taskID) {
+        listItems = dao.getAll(taskID);
+        adapter = new DetailListAdapter(getActivity(), R.layout.custom_item_detail_listview, listItems);
+        listView.setAdapter(adapter);
     }
 }

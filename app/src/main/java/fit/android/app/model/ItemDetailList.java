@@ -19,9 +19,15 @@ public class ItemDetailList {
     @Ignore
     public ItemDetailList() {
     }
-
+    @Ignore
     public ItemDetailList(int id, String nameDetail, int taskID) {
         this.id = id;
+        this.nameDetail = nameDetail;
+        this.taskID = taskID;
+    }
+    // Constructor (add task)
+
+    public ItemDetailList(String nameDetail, int taskID) {
         this.nameDetail = nameDetail;
         this.taskID = taskID;
     }
@@ -47,5 +53,14 @@ public class ItemDetailList {
 
     public void setTaskID(int taskID) {
         this.taskID = taskID;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemDetailList[" +
+                "id=" + id +
+                ", nameDetail='" + nameDetail + '\'' +
+                ", taskID=" + taskID +
+                ']';
     }
 }

@@ -9,8 +9,9 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users")
 public class User {
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     @ColumnInfo(name = "email")
     private String email;
 
@@ -20,7 +21,7 @@ public class User {
     @ColumnInfo(name = "password")
     private String password;
 
-    public User(@NonNull String email, String fullName, String password) {
+    public User(String email, String fullName, String password) {
         this.email = email;
         this.fullName = fullName;
         this.password = password;
@@ -30,12 +31,19 @@ public class User {
     public User() {
     }
 
-    @NonNull
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(@NonNull String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
