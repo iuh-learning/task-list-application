@@ -74,12 +74,14 @@ public class DetailListAdapter extends BaseAdapter {
         }
 
         view.setOnClickListener(new View.OnClickListener() {
+            ItemTaskListDAO itemTaskListDAO = AppDatabase.getDatabase(context).itemTaskListDAO();
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MainActivity_DetailList.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id_taskDetail",listItems.get(i).getId());
                 bundle.putInt("id_task",listItems.get(i).getTaskID());
+                bundle.putString("user_email", itemTaskListDAO.findByIdTask(itemDetailList.getTaskID()).getEmail());
                 intent.putExtras(bundle);
 
                 context.startActivity(intent);

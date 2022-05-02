@@ -51,9 +51,6 @@ public class MainActivity_DetailList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_your_detail);
 
-        // Render --> UI Listview (reload listview)
-        reLoadListView();
-
         // SQLite
         db = AppDatabase.getDatabase(MainActivity_DetailList.this);
 
@@ -93,9 +90,11 @@ public class MainActivity_DetailList extends AppCompatActivity {
         tvNameTask.setText(nameTask);
 
         if(statusDel != null && statusDel.equals("del")) {{
-            saveDataFromClientToFireBase(taskID, mail);
+            saveDataTaskDetailFromClientToFireBase(taskID, mail);
         }}
 
+        // Render --> UI Listview (reload listview)
+        reLoadListView();
 
         //App event handle
         //add
@@ -116,7 +115,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
                     return;
                 }
                 dao.insert(new ItemDetailList(txtEdit, taskID));
-                saveDataFromClientToFireBase(taskID, mail);
+                saveDataTaskDetailFromClientToFireBase(taskID, mail);
                 reLoadListView();
                 clearInput();
             }
@@ -147,8 +146,8 @@ public class MainActivity_DetailList extends AppCompatActivity {
                         if (result == 1) {
                             itemDetailList.setNameDetail(txtEdit);
                             dao.update(itemDetailList);
-                            saveDataFromClientToFireBase(taskID, mail);
                             reLoadListView();
+                            saveDataTaskDetailFromClientToFireBase(taskID, mail);
                             clearInput();
                         }
                     }
@@ -179,7 +178,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
         FragmentDetailTaskList fragmentDetailTaskList = new FragmentDetailTaskList();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.Fragment_detail, fragmentDetailTaskList, "Fragment item task-detail.")
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     // get id task detail from intent
@@ -193,13 +192,13 @@ public class MainActivity_DetailList extends AppCompatActivity {
     }
 
     // save data to firebase
-    private void saveDataFromClientToFireBase(int taskID, String mail) {
+    private void saveDataTaskDetailFromClientToFireBase(int taskID, String mail) {
         List<ItemDetailList> list = dao.getAll(taskID);
-
         Map<String, ItemDetailList> mapItemDetails = new HashMap<>();
 
         int idUser = userDAO.findByEmail(mail).getId();
         String nameTask = itemTaskListDAO.findByIdTask(taskID).getNameTask();
+
         mDatabase = FirebaseDatabase.getInstance().getReference("/users/"+ idUser +"/list-task/"+ taskID + "/" + nameTask);
 
         for (ItemDetailList item : list) {
@@ -211,6 +210,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private void getDataUserFromFirebaseSaveToRoomDatabase(int taskID, String email) {
