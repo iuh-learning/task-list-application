@@ -15,10 +15,13 @@ import java.util.List;
 
 import fit.android.app.R;
 import fit.android.app.activity.MainActivity_DetailList;
+import fit.android.app.activity.MainActivity_TaskList;
 import fit.android.app.dao.ItemDetailListDAO;
 import fit.android.app.dao.ItemTaskListDAO;
 import fit.android.app.database.AppDatabase;
 import fit.android.app.fragment.FragmentDetailTaskList;
+import fit.android.app.helper.Message;
+import fit.android.app.helper.MessageBoxListener;
 import fit.android.app.model.ItemDetailList;
 
 public class DetailListAdapter extends BaseAdapter {
@@ -65,13 +68,41 @@ public class DetailListAdapter extends BaseAdapter {
         TextView txtID = view.findViewById(R.id.txtID);
         Button btnDelete = view.findViewById(R.id.btnDeleteDetail);
 
-        final ItemDetailList itemDetailList = listItems.get(i);
+        ItemDetailList itemDetailList = listItems.get(i);
 
         if(listItems != null && !listItems.isEmpty()) {
             // set tv
             txtName.setText(itemDetailList.getNameDetail());
             txtID.setText( (i+1) + ". ");
         }
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Message.showConfirmMessgae(context, "Message",
+                        "Do you want to delete?", new MessageBoxListener() {
+                            @Override
+                            public void result(int result) {
+                                if(result == 1) {
+                                    // delete
+                                    int idTask = itemDetailList.getTaskID();
+                                    ItemDetailListDAO itemDetailListDAO = AppDatabase.getDatabase(context).itemDetailListDAO();
+                                    ItemTaskListDAO itemTaskListDAO = AppDatabase.getDatabase(context).itemTaskListDAO();
+                                    itemDetailListDAO.delete(itemDetailList);
+
+                                    // reload
+                                    Intent intent = new Intent(context.getApplicationContext(), MainActivity_DetailList.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt("id_task",idTask);
+                                    bundle.putString("status", "del");
+                                    bundle.putString("user_email", itemTaskListDAO.findByIdTask(itemDetailList.getTaskID()).getEmail());
+                                    intent.putExtras(bundle);
+                                    context.startActivity(intent);
+                                }
+                            }
+                        });
+            }
+        });
 
         view.setOnClickListener(new View.OnClickListener() {
             ItemTaskListDAO itemTaskListDAO = AppDatabase.getDatabase(context).itemTaskListDAO();
@@ -89,23 +120,6 @@ public class DetailListAdapter extends BaseAdapter {
             }
         });
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int idTask = itemDetailList.getTaskID();
-                ItemDetailListDAO itemDetailListDAO = AppDatabase.getDatabase(context).itemDetailListDAO();
-                ItemTaskListDAO itemTaskListDAO = AppDatabase.getDatabase(context).itemTaskListDAO();
-                itemDetailListDAO.delete(itemDetailList);
-
-                Intent intent = new Intent(context.getApplicationContext(), MainActivity_DetailList.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("id_task",idTask);
-                bundle.putString("status", "del");
-                bundle.putString("user_email", itemTaskListDAO.findByIdTask(itemDetailList.getTaskID()).getEmail());
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
-        });
         return view;
     }
 }

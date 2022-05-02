@@ -102,7 +102,7 @@ public class TaskListAdapter extends BaseAdapter {
                 ItemTaskListDAO dao = AppDatabase.getDatabase(context).itemTaskListDAO();
 
                 Message.showConfirmMessgae(context, "Message",
-                        "Do you want to delete? If you choose Yes then all task detail list deleted", new MessageBoxListener() {
+                        "Do you want to delete? If you choose Yes then all task detail list deleted?", new MessageBoxListener() {
                     @Override
                     public void result(int result) {
                         if(result == 1) {
