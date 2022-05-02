@@ -63,6 +63,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
         // DAO
         dao = db.itemTaskListDAO();
         userDAO = db.userDAO();
+        itemDetailListDAO = db.itemDetailListDAO();
 
         // find id
         btnAdd = findViewById(R.id.btnAdd);
@@ -121,7 +122,6 @@ public class MainActivity_TaskList extends AppCompatActivity {
                 reloadDataFromClientToFireBase(emailFromLogin);
                 reLoadListView();
                 clearInput();
-                //Message.showMessage(MainActivity_TaskList.this, "Message", "Inserted task name successfully.");
             }
         });
 
@@ -181,7 +181,7 @@ public class MainActivity_TaskList extends AppCompatActivity {
         FragmentItemTaskList fragmentItemTaskList = new FragmentItemTaskList();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.idFrameLayoutTaskList, fragmentItemTaskList, "Fragment item task-list.")
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     // get name task from intent
@@ -203,7 +203,6 @@ public class MainActivity_TaskList extends AppCompatActivity {
     // save data to firebase
     private void reloadDataFromClientToFireBase(String email) {
         List<ItemTaskList> list = dao.getAll(email);
-        Log.d("SIZE", list.size() + "");
         Map<String, ItemTaskList> mapTasks = new HashMap<>();
 
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -222,7 +221,6 @@ public class MainActivity_TaskList extends AppCompatActivity {
         }
 
         for(ItemTaskList item : list) {
-            Log.d("IDTASK: ", item.getId() + "");
             saveDataTaskDetailFromClientToFireBase(item.getId(), email);
         }
     }
