@@ -89,11 +89,9 @@ public class MainActivity_DetailList extends AppCompatActivity {
         String nameTask = itemTaskListDAO.findByIdTask(taskID).getNameTask();
         tvNameTask.setText(nameTask);
 
-        if(statusDel != null && statusDel.equals("del")) {{
+        if(statusDel != null && statusDel.equals("del")) {
             saveDataTaskDetailFromClientToFireBase(taskID, mail);
-        }}
-
-        // Render --> UI Listview (reload listview)
+        }
         reLoadListView();
 
         //App event handle
@@ -110,7 +108,7 @@ public class MainActivity_DetailList extends AppCompatActivity {
                 }
 
                 // check name detail
-                if (dao.findByNameTask(txtEdit) != null) {
+                if (dao.findByNameTask(txtEdit) != null && dao.findByNameTask(txtEdit).getTaskID() == taskID) {
                     Message.showMessage(MainActivity_DetailList.this, "Message", "Task detail already exists!");
                     return;
                 }
