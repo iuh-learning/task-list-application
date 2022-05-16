@@ -45,12 +45,12 @@
 
     <TextView
         android:id="@+id/txtNameTask"
-        android:layout_width="128dp"
-        android:layout_height="23dp"
+        android:layout_width="251dp"
+        android:layout_height="27dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="Hi. Name"
         android:fontFamily="@font/solway_medium"
+        android:text="Hi. Name"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -139,13 +139,13 @@
 
     <TextView
         android:id="@+id/txtBackToList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="102dp"
+        android:layout_height="25dp"
         android:layout_marginEnd="24dp"
+        android:fontFamily="@font/solway_medium"
         android:text="Back to list"
         android:textColor="@color/blue_text"
         android:textSize="18sp"
-        android:fontFamily="@font/solway_medium"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/txtNameTask"
         app:layout_constraintEnd_toEndOf="parent"
