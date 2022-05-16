@@ -146,6 +146,10 @@ public class MainActivity_TaskList extends AppCompatActivity {
                     @Override
                     public void result(int result) {
                         if(result == 1) {
+                            if(itemTaskList == null) {
+                                Message.showMessage(MainActivity_TaskList.this, "Message", "Task name not exist. Do you want add task?");
+                                return;
+                            }
                             itemTaskList.setNameTask(edtNameTask);
                             dao.update(itemTaskList);
                             reloadDataFromClientToFireBase(emailFromLogin);
