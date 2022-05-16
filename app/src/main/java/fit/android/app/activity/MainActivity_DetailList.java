@@ -142,6 +142,10 @@ public class MainActivity_DetailList extends AppCompatActivity {
                     @Override
                     public void result(int result) {
                         if (result == 1) {
+                            if(itemDetailList == null) {
+                                Message.showMessage(MainActivity_DetailList.this, "Message", "Task detail name not exist. Do you want add task detail?");
+                                return;
+                            }
                             itemDetailList.setNameDetail(txtEdit);
                             dao.update(itemDetailList);
                             reLoadListView();
